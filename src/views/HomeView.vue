@@ -9,7 +9,7 @@
         name=""
         id=""
         placeholder="Search for city of state"
-        class="w-full px-1 py-2 bg-transparent border-b focus:border-weather-secondary focus:outline-none focus:shadow-[0px_1px_0_0_#004E71]"
+        class="input"
       />
       <ul
         v-if="mapboxSearchResults"
