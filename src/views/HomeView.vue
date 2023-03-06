@@ -10,6 +10,7 @@
         id=""
         placeholder="Search for city of state"
         class="input"
+        @click="previewCity(searchResult)"
       />
       <div
         v-if="mapboxSearchResults"
@@ -25,7 +26,6 @@
               v-for="searchResult in mapboxSearchResults"
               :key="searchResult.id"
               class="py-2 cursor-pointer"
-              @click="previewCity(searchResult)"
             >
               {{ searchResult.place_name }}
             </li>
@@ -38,10 +38,12 @@
 
 <script setup>
 import { ref } from "vue";
-import axios from "axios";
+// import axios from "axios";
 
 const previewCity = (searchResult) => {
   console.log(searchResult);
+  const [city, state] = "Malmö, Skåne, Sverige".split(",");
+  console.log(city, state);
 };
 
 const searchQuery = ref("");
