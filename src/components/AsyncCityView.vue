@@ -1,5 +1,12 @@
 <template>
-  <div></div>
+  <div class="flex flex-col items-center flex-1">
+    <div class="w-full p-4 text-center text-white bg-weather-secondary">
+      <div v-if="route.query.preview">
+        <p>You are previewing this city</p>
+        <p>Click + to start tracking this city</p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
