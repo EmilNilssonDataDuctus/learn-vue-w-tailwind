@@ -11,7 +11,7 @@
         placeholder="Search for city of state"
         class="input"
       />
-      <ul
+      <div
         v-if="mapboxSearchResults"
         class="absolute bg-weather-secondary text-white w-full shadow-md py-2 px-1 top-[66px]"
       >
@@ -20,15 +20,18 @@
           No results, try again
         </p>
         <template v-else>
-          <li
-            v-for="searchResult in mapboxSearchResults"
-            :key="searchResult.id"
-            class="py-2 cursor-pointer"
-          >
-            {{ searchResult.place_name }}
-          </li>
+          <ul>
+            <li
+              v-for="searchResult in mapboxSearchResults"
+              :key="searchResult.id"
+              class="py-2 cursor-pointer"
+              @click="previewCity(searchResult)"
+            >
+              {{ searchResult.place_name }}
+            </li>
+          </ul>
         </template>
-      </ul>
+      </div>
     </div>
   </main>
 </template>
@@ -36,6 +39,10 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+
+const previewCity = (searchResult) => {
+  console.log(searchResult);
+};
 
 const searchQuery = ref("");
 const queryTimeout = ref(null);
