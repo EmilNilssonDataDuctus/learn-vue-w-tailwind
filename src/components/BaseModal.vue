@@ -1,25 +1,27 @@
 <template>
-  <Transition name="modal-outer">
-    <div
-      v-show="modalActive"
-      class="absolute top-0 left-0 flex justify-center w-full h-screen px-8 bg-black bg-opacity-30"
-    >
-      <Transition name="modal-inner">
-        <div
-          v-if="modalActive"
-          class="self-start max-w-screen-md p-4 mt-32 bg-white"
-        >
-          <slot />
-          <button
-            class="px-6 py-2 mt-8 text-white bg-weather-primary"
-            @click="$emit('close-modal')"
+  <Teleport to="body">
+    <Transition name="modal-outer">
+      <div
+        v-show="modalActive"
+        class="absolute top-0 left-0 flex justify-center w-full h-screen px-8 bg-black bg-opacity-30"
+      >
+        <Transition name="modal-inner">
+          <div
+            v-if="modalActive"
+            class="self-start max-w-screen-md p-4 mt-32 bg-white"
           >
-            Close
-          </button>
-        </div>
-      </Transition>
-    </div>
-  </Transition>
+            <slot />
+            <button
+              class="px-6 py-2 mt-8 text-white bg-weather-primary"
+              @click="$emit('close-modal')"
+            >
+              Close
+            </button>
+          </div>
+        </Transition>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup>
