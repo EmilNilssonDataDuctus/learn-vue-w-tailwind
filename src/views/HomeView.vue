@@ -39,11 +39,24 @@
 <script setup>
 import { ref } from "vue";
 // import axios from "axios";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const previewCity = (searchResult) => {
   console.log(searchResult);
   const [city, state] = "Malmö, Skåne, Sverige".split(",");
   console.log(city, state);
+  router.push({
+    name: "cityView",
+    params: { state: state.trim(), city: city },
+    query: {
+      // lat : searchResult.geometrey.coordinates[1],
+      // lng : searchResult.geometrey.coordinates[0],
+      lat: 193.4,
+      lng: 453.2,
+      preview: true
+    }
+  });
 };
 
 const searchQuery = ref("");
