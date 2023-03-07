@@ -10,7 +10,6 @@
         id=""
         placeholder="Search for city of state"
         class="input"
-        @click="previewCity(searchResult)"
       />
       <div
         v-if="mapboxSearchResults"
@@ -26,6 +25,7 @@
               v-for="searchResult in mapboxSearchResults"
               :key="searchResult.id"
               class="py-2 cursor-pointer"
+              @click="previewCity(searchResult)"
             >
               {{ searchResult.place_name }}
             </li>
@@ -38,26 +38,26 @@
 
 <script setup>
 import { ref } from "vue";
-// import axios from "axios";
+import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const previewCity = (searchResult) => {
-  console.log(searchResult);
-  const [city, state] = "Malmö, Skåne, Sverige".split(",");
-  console.log(city, state);
+  const [city, state] = searchResult["place_name"].split(",");
   router.push({
     name: "cityView",
-    params: { state: state.trim(), city: city },
+    params: { state: state.trim(), city: city.trim() },
     query: {
-      // lat : searchResult.geometrey.coordinates[1],
-      // lng : searchResult.geometrey.coordinates[0],
+      lat: searchResult.geometry.coordinates[1],
+      lng: searchResult.geometry.coordinates[0],
       lat: 193.4,
       lng: 453.2,
-      preview: true
-    }
+      preview: true,
+    },
   });
 };
+
+const mapboxAPIKey = import.meta.env.VITE_APP_MAPBOX_API;
 
 const searchQuery = ref("");
 const queryTimeout = ref(null);
@@ -70,13 +70,13 @@ const getSearchResults = () => {
   queryTimeout.value = setTimeout(async () => {
     if (searchQuery.value !== "") {
       try {
-        // const result = await axios.get(``);
-        // mapboxSearchResults.value = result.data.features;
-        // console.log(mapboxSearchResults.value);
+        const result = await axios.get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery.value}.json?access_token=${mapboxAPIKey}&types=place`
+        );
+        mapboxSearchResults.value = result.data.features;
       } catch {
         searchError.value = true;
       }
-      mapboxSearchResults.value = [];
       return;
     }
     mapboxSearchResults.value = null;
