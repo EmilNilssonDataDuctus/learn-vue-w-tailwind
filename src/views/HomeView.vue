@@ -50,8 +50,6 @@ const previewCity = (searchResult) => {
     query: {
       lat: searchResult.geometry.coordinates[1],
       lng: searchResult.geometry.coordinates[0],
-      lat: 193.4,
-      lng: 453.2,
       preview: true,
     },
   });
